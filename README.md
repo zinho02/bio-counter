@@ -1,4 +1,4 @@
-# Bio-counter
+# Bio Oscillator
 A study and implementation with simulation tools of biological oscillators.
 
 ## Abstract: 
