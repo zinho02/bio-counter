@@ -1,7 +1,7 @@
 clear;
 
 dt=0.01; 
-t=0:dt:800; 
+t=0:dt:500; 
 
 alfa0 = 0.03;
 alfa = 298.2;
@@ -14,6 +14,7 @@ m3 = 0;
 p1 = 0;
 p2 = 5;
 p3 = 15;
+tes = 300;
 
 m1s = zeros(1, length(t));
 m2s = zeros(1, length(t));
@@ -23,6 +24,14 @@ p2s = zeros(1, length(t));
 p3s = zeros(1, length(t));
 
 s = zeros(1, length(t));
+test = zeros(1, length(t));
+
+liny = zeros(1, length(t));
+
+k1 = 10;
+k2 = 10;
+k3 = 10;
+kq = 5;
 
 for i = 1:length(t)
   dm1dt = alfa0 .+ (alfa ./ (1 .+ p3.^n)) .- m1;
@@ -80,12 +89,24 @@ for i = 1:length(t)
   if p1 < 25 && p2 < 25 && p3 < 25
     s(i) = 700;
   endif
+  
+  %dtestdt = (p2 / k2) / (1 + (p3 / k3) + (p2 / k2) + (p1 / k1) + (p1 * p2 * p3 / (k1 * k2 * k3)) + (p1 * p2 / (k1 * k2)) + (p1 * p3 / (k1 * k3)) + (p2 * p3 / (k2 * k3)));
+  %tes = dt * dtestdt + tes;
+  %test(i) = tes;
+  
+  dtestdt = (p3 * p2 / (k3 * k2 * kq)) / (1 + (p3 / k3) + (p2 / k2) + (p1 / k1) + (p1 * p2 * p3 / (k1 * k2 * k3 * kq)) + (p1 * p2 / (k1 * k2 * kq)) + (p1 * p3 / (k1 * k3 * kq)) + (p2 * p3 / (k2 * k3 * kq)));
+  tes = dt * dtestdt + tes;
+  test(i) = tes;
+  
+  %if s(i) == 250
+  %  liny(i) = 500;
+  %endif
 endfor
 
 figure;
 hold on;
 grid on;
 
-plot(t, s, 'm;S;');
+plot(t, s, 'm;S;', t, test, 'r;Test;', t, liny, 'g;Line;');
 xlabel('t');
 ylabel('Concentration');
