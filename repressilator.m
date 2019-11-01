@@ -1,7 +1,7 @@
 clear;
 
 dt=0.01; 
-t=0:dt:500; 
+t=0:dt:300; 
 
 alfa0 = 0.03;
 alfa = 298.2;
@@ -14,7 +14,7 @@ m3 = 0;
 p1 = 0;
 p2 = 5;
 p3 = 15;
-tes = 300;
+con1 = 0; con2 = 0; con3 = 0; con4 = 0; con5 = 0; con6 = 0;
 
 m1s = zeros(1, length(t));
 m2s = zeros(1, length(t));
@@ -24,14 +24,25 @@ p2s = zeros(1, length(t));
 p3s = zeros(1, length(t));
 
 s = zeros(1, length(t));
-test = zeros(1, length(t));
+cons1 = zeros(1, length(t)); cons2 = zeros(1, length(t));cons3 = zeros(1, length(t));
+cons4 = zeros(1, length(t));cons5 = zeros(1, length(t));cons6 = zeros(1, length(t)); 
 
 liny = zeros(1, length(t));
 
+%parametros da producao
 k1 = 10;
 k2 = 10;
 k3 = 10;
+%fazer um kq para cada e testar os valores
 kq = 5;
+
+%par deg
+kd1 = 0.2;
+kd2 = 0.2;
+kd3 = 0.2;
+kd4 = 0.2;
+kd5 = 0.2;
+kd6 = 0.2;
 
 for i = 1:length(t)
   dm1dt = alfa0 .+ (alfa ./ (1 .+ p3.^n)) .- m1;
@@ -59,54 +70,81 @@ for i = 1:length(t)
   p3s(i) = p3;
   
   if p1 > 25 && p2 > 25 && p3 > 25
-    s(i) = 800;
+    s(i) = 8;
   endif
   
   if p1 > 25 && p2 > 25 && p3 < 25
-    s(i) = 250;
+    s(i) = 2.5;
   endif
   
   if p1 > 25 && p2 < 25 && p3 > 25
-    s(i) = 350;
+    s(i) = 3.5;
   endif
   
   if p1 > 25 && p2 < 25 && p3 < 25
-    s(i) = 300;
+    s(i) = 3;
   endif
   
   if p1 < 25 && p2 > 25 && p3 > 25
-    s(i) = 450;
+    s(i) = 4.5;
   endif
   
   if p1 < 25 && p2 > 25 && p3 < 25
-    s(i) = 200;
+    s(i) = 2;
   endif
   
   if p1 < 25 && p2 < 25 && p3 > 25
-    s(i) = 400;
+    s(i) = 4;
   endif
   
   if p1 < 25 && p2 < 25 && p3 < 25
-    s(i) = 700;
+    s(i) = 7;
   endif
   
-  %dtestdt = (p2 / k2) / (1 + (p3 / k3) + (p2 / k2) + (p1 / k1) + (p1 * p2 * p3 / (k1 * k2 * k3)) + (p1 * p2 / (k1 * k2)) + (p1 * p3 / (k1 * k3)) + (p2 * p3 / (k2 * k3)));
-  %tes = dt * dtestdt + tes;
-  %test(i) = tes;
+div = (1 + (p3 / k3) + (p2 / k2) + (p1 / k1) + (p1 * p2 * p3 / (k1 * k2 * k3 * kq)) + (p1 * p2 / (k1 * k2 * kq)) + (p1 * p3 / (k1 * k3 * kq)) + (p2 * p3 / (k2 * k3 * kq))); 
+
+%  ------2------
+  dconsdt = (p2 / k2) / div; 
+  dconsdt -= con1*kd1;
+  con1 = dt * dconsdt + con1;
+  cons1(i) = con1;
+
+%  ------2.5----
+  dconsdt = (p1 * p2 / (k1 * k2 * kq)) / div;
+  dconsdt -= con2*kd2;
+  con2 = dt * dconsdt + con2;
+  cons2(i) = con2;
   
-  dtestdt = (p3 * p2 / (k3 * k2 * kq)) / (1 + (p3 / k3) + (p2 / k2) + (p1 / k1) + (p1 * p2 * p3 / (k1 * k2 * k3 * kq)) + (p1 * p2 / (k1 * k2 * kq)) + (p1 * p3 / (k1 * k3 * kq)) + (p2 * p3 / (k2 * k3 * kq)));
-  tes = dt * dtestdt + tes;
-  test(i) = tes;
-  
-  %if s(i) == 250
-  %  liny(i) = 500;
-  %endif
+%  ------3----
+  dconsdt = (p1 / k1) / div;
+  dconsdt -= con3*kd3;
+  con3 = dt * dconsdt + con3;
+  cons3(i) = con3;
+
+%  ------3.5----
+  dconsdt = (p1 * p3 / (k1 * k3 * kq)) / div;
+  dconsdt -= con4*kd4;
+  con4 = dt * dconsdt + con4;
+  cons4(i) = con4;
+
+%  ------4----
+  dconsdt = (p3 / k3) / div;
+  dconsdt -= con5*kd5;
+  con5 = dt * dconsdt + con5;
+  cons5(i) = con5;
+
+%  ------4.5----
+  dconsdt = (p3 * p2 / (k3 * k2 * kq)) / div;
+  dconsdt -= con6*kd6;
+  con6 = dt * dconsdt + con6;
+  cons6(i) = con6;
+
 endfor
 
 figure;
 hold on;
 grid on;
 
-plot(t, s, 'm;S;', t, test, 'r;Test;', t, liny, 'g;Line;');
+plot(t, s, 'm;States;', t, cons1, 'r;P2;',  t, cons2, 'b;P1P2;',  t,  cons3, 'g;P1;',  t, cons4, 'y;P1P3;', t, cons5, 'c;P3;',  t, cons6, 'k;P2P3;');
 xlabel('t');
 ylabel('Concentration');
