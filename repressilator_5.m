@@ -9,7 +9,7 @@ beta = 0.2;
 n = 2;
 
 ms = zeros(1,5);
-ps = zeros(1,5); ps(2) = 5; ps(3) = 15;
+ps = zeros(1,5); ps(1) = 5; ps(3) = 15; ps(4)  = 30;
 
 mcons = zeros(5, length(t));
 pcons = zeros(5, length(t));
