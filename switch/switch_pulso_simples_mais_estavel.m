@@ -3,7 +3,7 @@ clear;
 dt=0.01; 
 t=0:dt:200; 
 
-%i = 1 ate 5000 
+%i = 1 ate 20000 
 
 p1 = 0;
 p2 = 2.5;
@@ -14,15 +14,11 @@ ii2 = 0;
 km1 = 1;
 km2 = 3;
 
-% inibicao entre os iis
-kq1 = 1;
-kq2 = 1;
-
 %dissociation constant
 kp1 = 1;
 kp2 = 2;
 
-% teste
+% parametros do collins para os iis
 beta2 =3;
 gama2 = 4;
 

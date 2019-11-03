@@ -1,0 +1,42 @@
+if (i > 800 && i < 1400)
+  pulso(i) = pulso(i-1)+0.05;
+endif
+if (i >= 1400 && i < 1700)
+  pulso(i) = pulso(i-1)-0.1;
+endif
+if (i > 5000 && i < 5600)
+  pulso(i) = pulso(i-1)+0.05;
+endif
+if (i >= 5600 && i < 5900)
+  pulso(i) = pulso(i-1)-0.1;
+endif
+if (i > 11000 && i < 11600)
+  pulso(i) = pulso(i-1)+0.05;
+endif
+if (i >= 11600 && i < 11900)
+  pulso(i) = pulso(i-1)-0.1;
+endif
+if (i > 17000 && i < 17600)
+  pulso(i) = pulso(i-1)+0.05;
+endif
+if (i >= 17600 && i < 17900)
+  pulso(i) = pulso(i-1)-0.1;
+endif
+if (i > 30000 && i < 30600)
+  pulso(i) = pulso(i-1)+0.05;
+endif
+if (i >= 30600 && i < 30900)
+  pulso(i) = pulso(i-1)-0.1;
+endif
+if (i > 34000 && i < 34600)
+  pulso(i) = pulso(i-1)+0.05;
+endif
+if (i >= 34600 && i < 34900)
+  pulso(i) = pulso(i-1)-0.1;
+endif
+if (i > 40000 && i < 40600)
+  pulso(i) = pulso(i-1)+0.05;
+endif
+if (i >= 40600 && i < 40900)
+  pulso(i) = pulso(i-1)-0.1;
+endif
