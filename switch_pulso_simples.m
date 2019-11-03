@@ -46,38 +46,6 @@ for i = 2:length(t)
    if ((mod(i, 1000) >=200 && mod(i,1000)<400) && i>1000 )
      pulso(i) = pulso(i-1)-0.1;
    endif
-   
-%   if (i> 800 && i <1200)
-%    pulso(i) = pulso(i-1)+0.05;
-%   endif
-%   
-%   if (i>= 1200 && i <1400)
-%    pulso(i) = pulso(i-1)-0.1;
-%   endif
-%   
-%   if (i>1800 && i <2200)
-%    pulso(i) = pulso(i-1)+0.05;
-%   endif
-%   
-%   if (i>= 2200 && i <2400)
-%    pulso(i) = pulso(i-1)-0.1;
-%   endif
-%   
-%   if (i>2800 && i <3200)
-%    pulso(i) = pulso(i-1)+0.05;
-%   endif
-%   
-%   if (i>= 3200 && i <3400)
-%    pulso(i) = pulso(i-1)-0.1;
-%   endif
-%   
-%   if (i>3800 && i <4200)
-%    pulso(i) = pulso(i-1)+0.05;
-%   endif
-%   
-%   if (i>= 4200 && i <4400)
-%    pulso(i) = pulso(i-1)-0.1;
-%   endif
   
   div = 1 + p1/kp1 + p2/kp2 + (p1*p2)/(kp1*kp2);
   
