@@ -22,36 +22,36 @@ p3 = 0;
 p3s = zeros(1, length(t));
 
 for i = 1:length(t)
-    
-  if (i> 400 && i <500)
-    i2s(i) = i2s(i-1)+0.1;
-   endif
-  
-  if (i>=500 && i<550)
-    i2s(i) = i2s(i-1)-0.2;
-   endif
-   
+     
    if (i> 800 && i <1200)
-    i1s(i) = i1s(i-1)+0.05;
-   endif
-   
-   if (i>= 1200 && i <1400)
-    i1s(i) = i1s(i-1)-0.1;
-   endif
-   
-   if (i>1800 && i <2200)
     i2s(i) = i2s(i-1)+0.05;
    endif
    
-   if (i>= 2200 && i <2400)
+   if (i>= 1200 && i <1400)
     i2s(i) = i2s(i-1)-0.1;
    endif
    
-   if (i>2800 && i <3200)
+   if (i>1800 && i <2200)
     i1s(i) = i1s(i-1)+0.05;
    endif
    
+   if (i>= 2200 && i <2400)
+    i1s(i) = i1s(i-1)-0.1;
+   endif
+   
+   if (i>2800 && i <3200)
+    i2s(i) = i2s(i-1)+0.05;
+   endif
+   
    if (i>= 3200 && i <3400)
+    i2s(i) = i2s(i-1)-0.1;
+   endif
+   
+   if (i>3800 && i <4200)
+    i1s(i) = i1s(i-1)+0.05;
+   endif
+   
+   if (i>= 4200 && i <4400)
     i1s(i) = i1s(i-1)-0.1;
    endif
    
