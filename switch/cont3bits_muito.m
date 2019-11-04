@@ -1,9 +1,9 @@
 clear;
 
 dt=0.01; 
-t=0:dt:300; 
+t=0:dt:500; 
 
-%i = 1 ate 60000
+%i = 1 ate 100000
 
 p1 = 0;
 p2 = 2.5;
@@ -25,12 +25,6 @@ kp2 = 2;
 beta2 =4;
 gama2 = 4;
 
-%mass action constant
-k2 = 2;
-
-%degradation rate
-kd2 = 0.8;
-
 p1s = zeros(1, length(t));
 p2s = zeros(1, length(t));
 
@@ -47,6 +41,17 @@ alpha1 = 10; alpha2 = 5;
 beta = 3;
 gama = 4;
 
+
+%2 and 3 bits
+%mass action constant
+k2 = 2;
+k3 = 1.5;
+
+%degradation rate
+kd2 = 0.8;
+kd3 = 0.9;
+%end 2 and 3 bits
+
 %-------------2bits---------------
 % pulso para o segundo switch
 pulso2 = zeros(1, length(t));
@@ -58,8 +63,8 @@ seii1 = 0;
 seii2 = 0;
 
 % maximal expression rates
-sekm1 = 1.7;
-sekm2 = 1.7;
+sekm1 = 1;
+sekm2 = 1;
 
 %dissociation constant
 sekp1 = 1;
@@ -79,14 +84,47 @@ sealpha1 = 10; sealpha2 = 5;
 sebeta = 3;
 segama = 4;
 
-soma = 0.1
+%-------------3bits---------------
+% pulso para o terceiroswitch
+pulso3 = zeros(1, length(t));
+pulso3aux = 0;
+
+thp1 = 0;
+thp2 = 2.5;
+thii1 = 0;
+thii2 = 0;
+
+% maximal expression rates
+thkm1 = 2;
+thkm2 = 2;
+
+%dissociation constant
+thkp1 = 1;
+thkp2 = 2;
+
+% parametros do collins para os iis
+thbeta2 =3;
+thgama2 = 3;
+
+thp1s = zeros(1, length(t));
+thp2s = zeros(1, length(t));
+
+thi1s = zeros(1, length(t));
+thi2s = zeros(1, length(t));
+
+thalpha1 = 10; thalpha2 = 5;
+thbeta = 3;
+thgama = 3;
+
+
+soma = 0.1;
 for i = 2:length(t)
    
-   if (mod(i, 2000) >800 && mod(i,2000)<1400)
+   if (mod(i, 3000) >800 && mod(i,3000)<1400)
      pulso(i) = pulso(i-1)+soma;
    endif
    
-   if (mod(i, 2000) >=1400 && mod(i,2000)<1700)
+   if (mod(i, 3000) >=1400 && mod(i,3000)<1700)
      pulso(i) = pulso(i-1)-soma*2;
    endif
   
@@ -143,15 +181,44 @@ div = 1 + p1/kp1 + p2/kp2 + (p1*p2)/(kp1*kp2);
   sep2 = dpdt * dt + sep2;
   sep2s(i) = sep2;
 
+  
+ %%  ----------3bits-----------
+%%  mRNA que vai funcionar como pulso3
+  dpdt =  k3*sei1s(i) -kd3*pulso3aux;
+  pulso3aux = dpdt * dt + pulso3aux;
+  pulso3(i) = pulso3aux;
+  
+  thdiv = 1 + thp1/thkp1 + thp2/thkp2 + (thp1*thp2)/(thkp1*thkp2);
+
+  dpdt = (  thkm1  *pulso3(i) * ((1 + thp1 / (thkp1)) / thdiv)     /   (1 + (thii2 / (1 + thp1s(i) ) ) ^ thbeta2)   ) - thii1;
+  thii1 = dpdt * dt + thii1;
+  thi1s(i) = thii1; 
+
+  dpdt = (  thkm2  *pulso3(i) * ((1 + thp2 / (thkp2)) / thdiv)       /              (1 + (thii1 / (1 + thp2s(i) ) ) ^ thgama2)     ) - thii2;
+  thii2 = dpdt * dt + thii2;
+  thi2s(i) = thii2;  
+ 
+  dpdt = (thalpha1 / (1 + (thp2 / (1 + thi2s(i) ) ) ^ thbeta )) - thp1;
+  thp1 = dpdt * dt + thp1;
+  thp1s(i) = thp1;
+  
+  dpdt = (thalpha2 / (1 + (thp1 / (1 + thi1s(i)) ) ^ thgama)) - thp2;
+  thp2 = dpdt * dt + thp2;
+  thp2s(i) = thp2;
+  
+  
+
 
 endfor
 
-figure;
-hold on;
-grid on;
-%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
-plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , i2s, 'y;i2;', t ,i1s,'g;i1;', t , pulso , 'k;pulso;');
-%
+%figure;
+%hold on;
+%grid on;
+%%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
+%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , i2s, 'y;i2;', t ,i1s,'g;i1;', t , pulso , 'k;pulso;');
+%xlabel('t');
+%ylabel('Concentration');
+
 figure;
 hold on;
 grid on;
@@ -160,10 +227,19 @@ plot(t, sep1s, 'b;seP1;', t ,sep2s, 'r;seP2;', t , sei2s, 'y;sei2;', t ,sei1s,'g
 xlabel('t');
 ylabel('Concentration');
 
+
 figure;
 hold on;
 grid on;
 %plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
-plot(t, p1s, 'b;P1;', t, sep1s, 'r;seP1;', t , pulso , 'k;pulso;');
+plot(t, thp1s, 'b;thP1;', t ,thp2s, 'r;thP2;', t , thi2s, 'y;thi2;', t ,thi1s,'g;thi1;', t , pulso , 'k;pulso;', t, pulso3, 'm;pulso3;', t, sei1s, 'c;sei1s;');
+xlabel('t');
+ylabel('Concentration');
+
+figure;
+hold on;
+grid on;
+%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
+plot(t, p1s, 'b;P1;', t, sep1s, 'r;seP1;', t, thp1s, 'g;thP1;', t , pulso , 'k;pulso;');
 xlabel('t');
 ylabel('Concentration');
