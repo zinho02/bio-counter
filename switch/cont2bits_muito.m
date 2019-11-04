@@ -29,7 +29,7 @@ gama2 = 4;
 k1 = 2;
 
 %degradation rate
-kd1 = 0.6;
+kd1 = 0.8;
 
 p1s = zeros(1, length(t));
 p2s = zeros(1, length(t));
@@ -58,8 +58,8 @@ seii1 = 0;
 seii2 = 0;
 
 % maximal expression rates
-sekm1 = 2;
-sekm2 = 2;
+sekm1 = 1;
+sekm2 = 1;
 
 %dissociation constant
 sekp1 = 1;
@@ -90,12 +90,12 @@ for i = 2:length(t)
    endif
   
   
-  div = 1 + p1/kp1 + p2/kp2 + (p1*p2)/(kp1*kp2);
+div = 1 + p1/kp1 + p2/kp2 + (p1*p2)/(kp1*kp2);
   
   
 %  verde, depende do p1 (azul) 
 %  dpdt = alpha0 + km1 * pulso(i) * ((1 + p1 / (kp1)) / div) - kd1*ii1;
-  dpdt =  ( pulso(i) * ((1 + p1 / (kp1)) / div)     /   (1 + (ii2 / (1 + p1s(i) ) ) ^ beta2)   ) - ii1;
+  dpdt = (  km1  *pulso(i) * ((1 + p1 / (kp1)) / div)     /   (1 + (ii2 / (1 + p1s(i) ) ) ^ beta2)   ) - ii1;
   ii1 = dpdt * dt + ii1;
   i1s(i) = ii1; 
   
@@ -105,7 +105,7 @@ for i = 2:length(t)
 %  dpdt = alpha0 + km2 * pulso(i) * ((1 + (p2) / (kp2 )) / div) - kd2*ii2;
 
 % (pulso controla a execucao da  AND entre p1 e not p2) -> representa o maximal expression rate de collins           collins  para verde reprimir amarelo
-  dpdt = ( pulso(i) * ((1 + p1 / (kp1)) / div)       /              (1 + (ii1 / (1 + p2s(i) ) ) ^ gama2)     ) - ii2;
+  dpdt = (  km2  *pulso(i) * ((1 + p2 / (kp2)) / div)       /              (1 + (ii1 / (1 + p2s(i) ) ) ^ gama2)     ) - ii2;
   ii2 = dpdt * dt + ii2;
   i2s(i) = ii2; 
  
@@ -125,14 +125,22 @@ for i = 2:length(t)
   pulso2(i) = pulso2aux;
   
   sediv = 1 + sep1/sekp1 + sep2/sekp2 + (sep1*sep2)/(sekp1*sekp2);
-
-  dpdt = ( 1.01* pulso2(i) * ((1 + sep1 / (sekp1)) / sediv)     /   (1 + (seii2 / (1 + sep1s(i) ) ) ^ sebeta2)   ) - seii1;
+  
+  dpdt = (  sekm1  *pulso2(i) * ((1 + sep1 / (sekp1)) / sediv)     /   (1 + (seii2 / (1 + sep1s(i) ) ) ^ sebeta2)   ) - seii1;
   seii1 = dpdt * dt + seii1;
   sei1s(i) = seii1; 
-    
-  dpdt = ( pulso2(i) * ((1 + sep1 / (sekp1)) / sediv)       /              (1 + (seii1 / (1 + sep2s(i) ) ) ^ segama2)     ) - seii2;
+
+  dpdt = (  sekm2  *pulso2(i) * ((1 + sep2 / (sekp2)) / sediv)       /              (1 + (seii1 / (1 + sep2s(i) ) ) ^ segama2)     ) - seii2;
   seii2 = dpdt * dt + seii2;
   sei2s(i) = seii2; 
+
+%  dpdt = ( 1.01* pulso2(i) * ((1 + sep1 / (sekp1)) / sediv)     /   (1 + (seii2 / (1 + sep1s(i) ) ) ^ sebeta2)   ) - seii1;
+%  seii1 = dpdt * dt + seii1;
+%  sei1s(i) = seii1; 
+%    
+%  dpdt = ( pulso2(i) * ((1 + sep1 / (sekp1)) / sediv)       /              (1 + (seii1 / (1 + sep2s(i) ) ) ^ segama2)     ) - seii2;
+%  seii2 = dpdt * dt + seii2;
+%  sei2s(i) = seii2; 
  
   dpdt = (sealpha1 / (1 + (sep2 / (1 + sei2s(i) ) ) ^ sebeta )) - sep1;
   sep1 = dpdt * dt + sep1;
@@ -145,11 +153,11 @@ for i = 2:length(t)
 
 endfor
 
-%figure;
-%hold on;
-%grid on;
-%%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
-%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , i2s, 'y;i2;', t ,i1s,'g;i1;', t , pulso , 'k;pulso;');
+figure;
+hold on;
+grid on;
+%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
+plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , i2s, 'y;i2;', t ,i1s,'g;i1;', t , pulso , 'k;pulso;');
 %
 figure;
 hold on;
