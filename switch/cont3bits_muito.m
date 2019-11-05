@@ -3,6 +3,7 @@ clear;
 dt=0.01; 
 t=0:dt:500; 
 
+%PORQUE BETA, SEBETA E THBETA MUDANDO DE 3 PARA 4 FUNCIONA?
 %i = 1 ate 100000
 
 p1 = 0;
@@ -38,7 +39,7 @@ i2s = zeros(1, length(t));
 
 %posso alterar de diversas estranhas maneiras os alphas
 alpha1 = 10; alpha2 = 5;
-beta = 3;
+beta = 4;
 gama = 4;
 
 
@@ -81,7 +82,7 @@ sei1s = zeros(1, length(t));
 sei2s = zeros(1, length(t));
 
 sealpha1 = 10; sealpha2 = 5;
-sebeta = 3;
+sebeta =4;
 segama = 4;
 
 %-------------3bits---------------
@@ -95,16 +96,16 @@ thii1 = 0;
 thii2 = 0;
 
 % maximal expression rates
-thkm1 = 2;
-thkm2 = 2;
+thkm1 = 1;
+thkm2 = 1;
 
 %dissociation constant
 thkp1 = 1;
 thkp2 = 2;
 
 % parametros do collins para os iis
-thbeta2 =3;
-thgama2 = 3;
+thbeta2 =4;
+thgama2 = 4;
 
 thp1s = zeros(1, length(t));
 thp2s = zeros(1, length(t));
@@ -113,8 +114,8 @@ thi1s = zeros(1, length(t));
 thi2s = zeros(1, length(t));
 
 thalpha1 = 10; thalpha2 = 5;
-thbeta = 3;
-thgama = 3;
+thbeta = 4;
+thgama = 4;
 
 
 soma = 0.1;

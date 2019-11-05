@@ -154,7 +154,7 @@ endfor
 figure;
 hold on;
 grid on;
-
-plot(t, s, 'm;States;', t, cons1, 'r;P2;',  t, cons2, 'b;P1P2;',  t,  cons3, 'g;P1;',  t, cons4, 'y;P1P3;', t, cons5, 'c;P3;',  t, cons6, 'k;P2P3;');
+plot(t,s, 'm;States;', t, p1s, 'r;Pi;',  t, p2s, 'b;P2;',  t,  p3s,'g;P3;');
+%plot(t, s, 'm;States;', t, cons1, 'r;P2;',  t, cons2, 'b;P1P2;',  t,  cons3, 'g;P1;',  t, cons4, 'y;P1P3;', t, cons5, 'c;P3;',  t, cons6, 'k;P2P3;');
 xlabel('t');
 ylabel('Concentration');
