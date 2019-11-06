@@ -44,7 +44,7 @@ i2s = zeros(1, length(t));
 
 %posso alterar de diversas estranhas maneiras os alphas
 alpha1 = 10; alpha2 = 5;
-beta = 3;
+beta = 4;
 gama = 4;
 
 %-------------2bits---------------
@@ -58,8 +58,8 @@ seii1 = 0;
 seii2 = 0;
 
 % maximal expression rates
-sekm1 = 1.7;
-sekm2 = 1.7;
+sekm1 = 1;
+sekm2 = 1;
 
 %dissociation constant
 sekp1 = 1;
@@ -76,17 +76,18 @@ sei1s = zeros(1, length(t));
 sei2s = zeros(1, length(t));
 
 sealpha1 = 10; sealpha2 = 5;
-sebeta = 3;
+sebeta =4;
 segama = 4;
+
 
 soma = 0.1
 for i = 2:length(t)
    
-   if (mod(i, 2000) >800 && mod(i,2000)<1400)
+   if (mod(i, 3000) >800 && mod(i,3000)<1400)
      pulso(i) = pulso(i-1)+soma;
    endif
    
-   if (mod(i, 2000) >=1400 && mod(i,2000)<1700)
+   if (mod(i, 3000) >=1400 && mod(i,3000)<1700)
      pulso(i) = pulso(i-1)-soma*2;
    endif
   

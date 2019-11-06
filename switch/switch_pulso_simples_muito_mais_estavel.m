@@ -34,7 +34,7 @@ i1s = zeros(1, length(t));
 i2s = zeros(1, length(t));
 
 alpha1 = 10; alpha2 = 5;
-beta = 3;
+beta = 4;
 gama = 4;
 
 p3 = 0;
@@ -43,11 +43,11 @@ p3s = zeros(1, length(t));
 soma = 0.1
 for i = 2:length(t)
    
-   if (mod(i, 2000) >800 && mod(i,2000)<1400)
+   if (mod(i, 3000) >800 && mod(i,3000)<1400)
      pulso(i) = pulso(i-1)+soma;
    endif
    
-   if (mod(i, 2000) >=1400 && mod(i,2000)<1700)
+   if (mod(i, 3000) >=1400 && mod(i,3000)<1700)
      pulso(i) = pulso(i-1)-soma*2;
    endif
   
