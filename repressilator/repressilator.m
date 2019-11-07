@@ -54,6 +54,9 @@ kd6 = 0.2;
 alpha1 = alpha3 = alpha5 = 1;
 alpha2 = alpha4 = alpha6 = 3.77;
 
+
+ajuste = 10;
+
 for i = 1:length(t)
   dm1dt = alfa0 .+ (alfa ./ (1 .+ p3.^n)) .- m1;
   m1 = dm1dt * dt + m1;
@@ -80,35 +83,35 @@ for i = 1:length(t)
   p3s(i) = p3;
   
   if p1 > 25 && p2 > 25 && p3 > 25
-    s(i) = 8;
+    s(i) = 8*ajuste;
   endif
   
   if p1 > 25 && p2 > 25 && p3 < 25
-    s(i) = 2.5;
+    s(i) = 2.5*ajuste;
   endif
   
   if p1 > 25 && p2 < 25 && p3 > 25
-    s(i) = 3.5;
+    s(i) = 3.5*ajuste;
   endif
   
   if p1 > 25 && p2 < 25 && p3 < 25
-    s(i) = 3;
+    s(i) = 3*ajuste;
   endif
   
   if p1 < 25 && p2 > 25 && p3 > 25
-    s(i) = 4.5;
+    s(i) = 4.5*ajuste;
   endif
   
   if p1 < 25 && p2 > 25 && p3 < 25
-    s(i) = 2;
+    s(i) = 2*ajuste;
   endif
   
   if p1 < 25 && p2 < 25 && p3 > 25
-    s(i) = 4;
+    s(i) = 4*ajuste;
   endif
   
   if p1 < 25 && p2 < 25 && p3 < 25
-    s(i) = 7;
+    s(i) = 7*ajuste;
   endif
   
 div = (1 + (p3 / k3) + (p2 / k2) + (p1 / k1) + (p1 * p2 * p3 / (k1 * k2 * k3 * kq)) + (p1 * p2 / (k1 * k2 * kq)) + (p1 * p3 / (k1 * k3 * kq)) + (p2 * p3 / (k2 * k3 * kq))); 
