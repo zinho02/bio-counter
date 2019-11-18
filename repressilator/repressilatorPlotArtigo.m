@@ -155,7 +155,6 @@ figure;
 hold on;
 grid on;
 %plot(t, p1s, '--k;P1;',  t, p2s, '-k;P2;',  t,  p3s,'.-k;P3;');
-%plot(t, s, 'm;States;', t, cons1, '--k;P2;',  t, cons2, '-k;P1P2;',  t,  cons3, ':k;P1;',  t, cons4, '-.k;P1P3;', t, cons5, 'c;P3;',  t, cons6, 'g;P2P3;');
 
 %other figure
 %plot(t, s, '-k;States;',t, cons1, '--k;P2;',  t, cons2, '-.k;P1P2;',  t,  cons3, ':k;P1;');
