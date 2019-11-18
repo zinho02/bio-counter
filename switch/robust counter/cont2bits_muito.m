@@ -3,7 +3,7 @@ clear;
 dt=0.01; 
 t=0:dt:300; 
 
-%i = 1 ate 60000
+%i = 1 ate 30000
 
 p1 = 0;
 p2 = 2.5;
@@ -34,15 +34,12 @@ kd2 = 0.8;
 p1s = zeros(1, length(t));
 p2s = zeros(1, length(t));
 
-% pulso representa uma explosao na concentracao de mRNAs que possuem dois operators
-% o primeiro precisa de p1 AND (NOT p2) e o segundo precisa de p2 AND (NOT p1)
 pulso = zeros(1, length(t));
 
 i1s = zeros(1, length(t));
 i2s = zeros(1, length(t));
 
 
-%posso alterar de diversas estranhas maneiras os alphas
 alpha1 = 10; alpha2 = 5;
 beta = 4;
 gama = 4;
@@ -94,19 +91,10 @@ for i = 2:length(t)
   
 div = 1 + p1/kp1 + p2/kp2 + (p1*p2)/(kp1*kp2);
   
-  
-%  verde, depende do p1 (azul) 
-%  dpdt = alpha0 + km1 * pulso(i) * ((1 + p1 / (kp1)) / div) - kd1*ii1;
   dpdt = (  km1  *pulso(i) * ((1 + p1 / (kp1)) / div)     /   (1 + (ii2 / (1 + p1s(i) ) ) ^ beta2)   ) - ii1;
   ii1 = dpdt * dt + ii1;
   i1s(i) = ii1; 
   
-  
-%  amarelo deve ser o primeiro
-% usei collins pois precisava que o crescimento de amarelo reprimisse o crescimento do verde.
-%  dpdt = alpha0 + km2 * pulso(i) * ((1 + (p2) / (kp2 )) / div) - kd2*ii2;
-
-% (pulso controla a execucao da  AND entre p1 e not p2) -> representa o maximal expression rate de collins           collins  para verde reprimir amarelo
   dpdt = (  km2  *pulso(i) * ((1 + p2 / (kp2)) / div)       /              (1 + (ii1 / (1 + p2s(i) ) ) ^ gama2)     ) - ii2;
   ii2 = dpdt * dt + ii2;
   i2s(i) = ii2; 
@@ -121,7 +109,6 @@ div = 1 + p1/kp1 + p2/kp2 + (p1*p2)/(kp1*kp2);
   
   
 %%  ----------2bits-----------
-%%  mRNA que vai funcionar como pulso2
   dpdt =  k2*i1s(i) -kd2*pulso2aux;
   pulso2aux = dpdt * dt + pulso2aux;
   pulso2(i) = pulso2aux;

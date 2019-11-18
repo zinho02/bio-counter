@@ -3,7 +3,6 @@ clear;
 dt=0.01; 
 t=0:dt:500; 
 
-%POR QUE BETA, SEBETA E THBETA MUDANDO DE 3 PARA 4 FUNCIONA?
 %i = 1 ate 50.000
 
 p1 = 0;
@@ -29,22 +28,20 @@ gama2 = 4;
 p1s = zeros(1, length(t));
 p2s = zeros(1, length(t));
 
-% pulso representa uma explosao na concentracao de mRNAs que possuem dois operators
-% o primeiro precisa de p1 AND (NOT p2) e o segundo precisa de p2 AND (NOT p1)
+%input
 pulso = zeros(1, length(t));
 
 i1s = zeros(1, length(t));
 i2s = zeros(1, length(t));
 
 
-%posso alterar de diversas estranhas maneiras os alphas
 alpha1 = 10; alpha2 = 5;
 beta = 4;
 gama = 4;
 
 
 %2 and 3 bits
-%mass action constant
+%constants
 k2 = 2;
 k3 = 1.5;
 
@@ -120,7 +117,7 @@ thgama = 4;
 
 soma = 0.1;
 for i = 2:length(t)
-   
+%   pulsos
    if (mod(i, 3000) >800 && mod(i,3000)<1400)
      pulso(i) = pulso(i-1)+soma;
    endif
@@ -129,22 +126,14 @@ for i = 2:length(t)
      pulso(i) = pulso(i-1)-soma*2;
    endif
   
-  
+ 
 div = 1 + p1/kp1 + p2/kp2 + (p1*p2)/(kp1*kp2);
   
   
-%  verde, depende do p1 (azul) 
-%  dpdt = alpha0 + km1 * pulso(i) * ((1 + p1 / (kp1)) / div) - kd1*ii1;
   dpdt = (  km1  *pulso(i) * ((1 + p1 / (kp1)) / div)     /   (1 + (ii2 / (1 + p1s(i) ) ) ^ beta2)   ) - ii1;
   ii1 = dpdt * dt + ii1;
   i1s(i) = ii1; 
   
-  
-%  amarelo deve ser o primeiro
-% usei collins pois precisava que o crescimento de amarelo reprimisse o crescimento do verde.
-%  dpdt = alpha0 + km2 * pulso(i) * ((1 + (p2) / (kp2 )) / div) - kd2*ii2;
-
-% (pulso controla a execucao da  AND entre p1 e not p2) -> representa o maximal expression rate de collins           collins  para verde reprimir amarelo
   dpdt = (  km2  *pulso(i) * ((1 + p2 / (kp2)) / div)       /              (1 + (ii1 / (1 + p2s(i) ) ) ^ gama2)     ) - ii2;
   ii2 = dpdt * dt + ii2;
   i2s(i) = ii2; 
@@ -159,7 +148,6 @@ div = 1 + p1/kp1 + p2/kp2 + (p1*p2)/(kp1*kp2);
   
   
 %%  ----------2bits-----------
-%%  mRNA que vai funcionar como pulso2
   dpdt =  k2*i1s(i) -kd2*pulso2aux;
   pulso2aux = dpdt * dt + pulso2aux;
   pulso2(i) = pulso2aux;
@@ -184,7 +172,6 @@ div = 1 + p1/kp1 + p2/kp2 + (p1*p2)/(kp1*kp2);
 
   
  %%  ----------3bits-----------
-%%  mRNA que vai funcionar como pulso3
   dpdt =  k3*sei1s(i) -kd3*pulso3aux;
   pulso3aux = dpdt * dt + pulso3aux;
   pulso3(i) = pulso3aux;
@@ -206,10 +193,6 @@ div = 1 + p1/kp1 + p2/kp2 + (p1*p2)/(kp1*kp2);
   dpdt = (thalpha2 / (1 + (thp1 / (1 + thi1s(i)) ) ^ thgama)) - thp2;
   thp2 = dpdt * dt + thp2;
   thp2s(i) = thp2;
-  
-  
-
-
 endfor
 
 %figure;
@@ -220,23 +203,24 @@ endfor
 %xlabel('t');
 %ylabel('Concentration');
 
-figure;
-hold on;
-grid on;
-%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
-plot(t, sep1s, 'b;seP1;', t ,sep2s, 'r;seP2;', t , sei2s, 'y;sei2;', t ,sei1s,'g;sei1;', t , pulso , 'k;pulso;', t, pulso2, 'm;pulso2;');
-xlabel('t');
-ylabel('Concentration');
+%figure;
+%hold on;
+%grid on;
+%%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
+%plot(t, sep1s, 'b;seP1;', t ,sep2s, 'r;seP2;', t , sei2s, 'y;sei2;', t ,sei1s,'g;sei1;', t , pulso , 'k;pulso;', t, pulso2, 'm;pulso2;');
+%xlabel('t');
+%ylabel('Concentration');
+%
+%
+%figure;
+%hold on;
+%grid on;
+%%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
+%plot(t, thp1s, 'b;thP1;', t ,thp2s, 'r;thP2;', t , thi2s, 'y;thi2;', t ,thi1s,'g;thi1;', t , pulso , 'k;pulso;', t, pulso3, 'm;pulso3;', t, sei1s, 'c;sei1s;');
+%xlabel('t');
+%ylabel('Concentration');
 
-
-figure;
-hold on;
-grid on;
-%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
-plot(t, thp1s, 'b;thP1;', t ,thp2s, 'r;thP2;', t , thi2s, 'y;thi2;', t ,thi1s,'g;thi1;', t , pulso , 'k;pulso;', t, pulso3, 'm;pulso3;', t, sei1s, 'c;sei1s;');
-xlabel('t');
-ylabel('Concentration');
-
+%outputs finais
 figure;
 hold on;
 grid on;
