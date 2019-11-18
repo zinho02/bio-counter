@@ -1,7 +1,7 @@
 clear;
 
 dt=0.01; 
-t=0:dt:300; 
+t=0:dt:100; 
 
 % parametros mRNAs e proteinas
 alfa0 = 0.03;
@@ -25,6 +25,7 @@ m3s = zeros(1, length(t));
 p1s = zeros(1, length(t));
 p2s = zeros(1, length(t));
 p3s = zeros(1, length(t));
+threshold = zeros(1, length(t)); 
 
 % states
 s = zeros(1, length(t));
@@ -55,7 +56,7 @@ alpha1 = alpha3 = alpha5 = 1;
 alpha2 = alpha4 = alpha6 = 3.77;
 
 
-ajuste = 10;
+ajuste = 1;
 
 for i = 1:length(t)
   dm1dt = alfa0 .+ (alfa ./ (1 .+ p3.^n)) .- m1;
@@ -82,35 +83,35 @@ for i = 1:length(t)
   p3 = dp3dt * dt + p3;
   p3s(i) = p3;
   
-  if p1 > 25 && p2 > 25 && p3 > 25
+  if p1 > 20 && p2 > 20 && p3 > 20
     s(i) = 8*ajuste;
   endif
   
-  if p1 > 25 && p2 > 25 && p3 < 25
+  if p1 > 20 && p2 > 20 && p3 < 20
     s(i) = 2.5*ajuste;
   endif
   
-  if p1 > 25 && p2 < 25 && p3 > 25
+  if p1 > 20 && p2 < 20 && p3 > 20
     s(i) = 3.5*ajuste;
   endif
   
-  if p1 > 25 && p2 < 25 && p3 < 25
+  if p1 > 20 && p2 < 20 && p3 < 20
     s(i) = 3*ajuste;
   endif
   
-  if p1 < 25 && p2 > 25 && p3 > 25
+  if p1 < 20 && p2 > 20 && p3 > 20
     s(i) = 4.5*ajuste;
   endif
   
-  if p1 < 25 && p2 > 25 && p3 < 25
+  if p1 < 20 && p2 > 20 && p3 < 20
     s(i) = 2*ajuste;
   endif
   
-  if p1 < 25 && p2 < 25 && p3 > 25
+  if p1 < 20 && p2 < 20 && p3 > 20
     s(i) = 4*ajuste;
   endif
   
-  if p1 < 25 && p2 < 25 && p3 < 25
+  if p1 < 20 && p2 < 20 && p3 < 20
     s(i) = 7*ajuste;
   endif
   
@@ -152,12 +153,13 @@ div = (1 + (p3 / k3) + (p2 / k2) + (p1 / k1) + (p1 * p2 * p3 / (k1 * k2 * k3 * k
   con6 = dt * dconsdt + con6;
   cons6(i) = con6;
 
+  threshold(i) = 20;
 endfor
 
 figure;
 hold on;
 grid on;
-plot(t,s, 'm;States;', t, p1s, 'r;Pi;',  t, p2s, 'b;P2;',  t,  p3s,'g;P3;');
+plot( t, p1s, '.;P1;',  t, p2s, '^;P2;',  t,  p3s,'@;P3;', t , threshold, '-;Threshold;');
 %plot(t, s, 'm;States;', t, cons1, 'r;P2;',  t, cons2, 'b;P1P2;',  t,  cons3, 'g;P1;',  t, cons4, 'y;P1P3;', t, cons5, 'c;P3;',  t, cons6, 'k;P2P3;');
 xlabel('t');
 ylabel('Concentration');
