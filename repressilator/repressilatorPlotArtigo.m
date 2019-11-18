@@ -29,7 +29,7 @@ p3s = zeros(1, length(t));
 % states
 s = zeros(1, length(t));
 
-% concentracao de promoters  ao passar do tempo
+% concentracao de proteinas resultantes das ANDs ao passar do tempo
 cons1 = zeros(1, length(t)); cons2 = zeros(1, length(t));cons3 = zeros(1, length(t));
 cons4 = zeros(1, length(t));cons5 = zeros(1, length(t));cons6 = zeros(1, length(t)); 
 
