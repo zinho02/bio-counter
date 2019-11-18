@@ -137,7 +137,6 @@ endfor
 figure;
 hold on;
 grid on;
-%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
 plot(t, sep1s, 'b;seP1;', t ,sep2s, 'r;seP2;', t , sei2s, 'y;sei2;', t ,sei1s,'g;sei1;', t , pulso , 'k;pulso;', t, pulso2, 'm;pulso2;');
 xlabel('t');
 ylabel('Concentration');
@@ -145,7 +144,6 @@ ylabel('Concentration');
 figure;
 hold on;
 grid on;
-%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
 plot(t, p1s, 'b;P1;', t, sep1s, 'r;seP1;', t , pulso , 'k;pulso;');
 xlabel('t');
 ylabel('Concentration');
