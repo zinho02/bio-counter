@@ -79,35 +79,35 @@ for i = 1:length(t)
   p3 = dp3dt * dt + p3;
   p3s(i) = p3;
   
-  if p1 > 25 && p2 > 25 && p3 > 25
+  if p1 > 15 && p2 > 15 && p3 > 15
     s(i) = 8;
   endif
   
-  if p1 > 25 && p2 > 25 && p3 < 25
+  if p1 > 15 && p2 > 15 && p3 < 15
     s(i) = 2.5;
   endif
   
-  if p1 > 25 && p2 < 25 && p3 > 25
+  if p1 > 15 && p2 < 15 && p3 > 15
     s(i) = 3.5;
   endif
   
-  if p1 > 25 && p2 < 25 && p3 < 25
+  if p1 > 15 && p2 < 15 && p3 < 15
     s(i) = 3;
   endif
   
-  if p1 < 25 && p2 > 25 && p3 > 25
+  if p1 < 15 && p2 > 15 && p3 > 15
     s(i) = 4.5;
   endif
   
-  if p1 < 25 && p2 > 25 && p3 < 25
+  if p1 < 15 && p2 > 15 && p3 < 15
     s(i) = 2;
   endif
   
-  if p1 < 25 && p2 < 25 && p3 > 25
+  if p1 < 15 && p2 < 15 && p3 > 15
     s(i) = 4;
   endif
   
-  if p1 < 25 && p2 < 25 && p3 < 25
+  if p1 < 15 && p2 < 15 && p3 < 15
     s(i) = 7;
   endif
   
@@ -153,11 +153,18 @@ endfor
 
 figure;
 hold on;
-grid on;
-%plot(t, p1s, '--k;P1;',  t, p2s, '-k;P2;',  t,  p3s,'.-k;P3;');
+plot(t, p1s, '--k;P1;',  t, p2s, '-k;P2;',  t,  p3s,'.-k;P3;');
+xlabel('Time');
+ylabel('Concentration');
 
-%other figure
-%plot(t, s, '-k;States;',t, cons1, '--k;P2;',  t, cons2, '-.k;P1P2;',  t,  cons3, ':k;P1;');
+figure;
+hold on;
+plot(t, s, '-k;States;',t, cons1, '--k;P2;',  t, cons2, '-.k;P1P2;',  t,  cons3, ':k;P1;');
+xlabel('Time');
+ylabel('Concentration');
+
+figure;
+hold on;
 plot(t, s, '-k;States;',t, cons4, '--k;P1P3;', t, cons5, '-.k;P3;',  t, cons6, ':k;P2P3;');
 xlabel('Time');
 ylabel('Concentration');
