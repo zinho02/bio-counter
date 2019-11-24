@@ -29,7 +29,7 @@ Here we have the main references that we used to have a basis from where to star
 Here we have all the switches implementations that we did during the scientific study.  
 ### initial ideas  
 Here we have the Collins toggle switch standard implementation in the file "CollinsToggleSwitch.m".  
-The "ourSwitch_1bitCounter.m" was our first try to make a switch osciilate.  
+The "ourSwitch_1bitCounter.m" was our first try to make a switch.  
 ### fragile counter  
 Here we have better implementations than our initial ideas, but they yet are not stable enough.  
 ### robust counter  
