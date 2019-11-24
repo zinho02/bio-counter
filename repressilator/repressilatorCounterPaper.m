@@ -29,6 +29,9 @@ p3s = zeros(1, length(t));
 % states
 s = zeros(1, length(t));
 
+%threshold
+lin = zeros(1, length(t));
+
 % concentracao de proteinas resultantes das ANDs ao passar do tempo
 cons1 = zeros(1, length(t)); cons2 = zeros(1, length(t));cons3 = zeros(1, length(t));
 cons4 = zeros(1, length(t));cons5 = zeros(1, length(t));cons6 = zeros(1, length(t)); 
@@ -80,7 +83,7 @@ for i = 1:length(t)
   p3s(i) = p3;
   
   if p1 > 15 && p2 > 15 && p3 > 15
-    s(i) = 8;
+    s(i) = 1;
   endif
   
   if p1 > 15 && p2 > 15 && p3 < 15
@@ -108,10 +111,12 @@ for i = 1:length(t)
   endif
   
   if p1 < 15 && p2 < 15 && p3 < 15
-    s(i) = 7;
+    s(i) = 0;
   endif
   
-div = (1 + (p3 / k3) + (p2 / k2) + (p1 / k1) + (p1 * p2 * p3 / (k1 * k2 * k3 * kq)) + (p1 * p2 / (k1 * k2 * kq)) + (p1 * p3 / (k1 * k3 * kq)) + (p2 * p3 / (k2 * k3 * kq))); 
+  lin(i) = 15;
+  
+  div = (1 + (p3 / k3) + (p2 / k2) + (p1 / k1) + (p1 * p2 * p3 / (k1 * k2 * k3 * kq)) + (p1 * p2 / (k1 * k2 * kq)) + (p1 * p3 / (k1 * k3 * kq)) + (p2 * p3 / (k2 * k3 * kq))); 
 
 %  ------2------
   dconsdt = alpha1 * (p2 / k2) / div; 
@@ -153,7 +158,7 @@ endfor
 
 figure;
 hold on;
-plot(t, p1s, '--k;P1;',  t, p2s, '-k;P2;',  t,  p3s,'.-k;P3;');
+plot(t, p1s, 'k;P1;',  t, p2s, '--k;P2;',  t,  p3s,':k;P3;', t, lin, 'k; Threshold;');
 xlabel('Time');
 ylabel('Concentration');
 
