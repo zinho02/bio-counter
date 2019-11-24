@@ -18,9 +18,9 @@ Here we have the images that we used and not used in our paper, separeted in the
 ## repressilator  
 Here we have the two Matlab scripts of a Represssilator implementation. Only the the "repressilatorCounterPaper.m" was used in our paper. The other one could be used to expand this implementation of a counter based on the Repressilator.  
 In the end of the file "repressilatorCounterPaper.m" we have 3 plots that were used.  
-The first one in line 157: Shows the concentration of each protein in a standard Repressilator implementation.  
-The second one in line 160: Shows the States "ladder" as well as the the states 0,1 and 2 described in the paper.  
-The third one in line 161: Shows the States "ladder" as well as the the states 3,4 and 5 described in the paper.  
+The first one in line 161: Shows the concentration of each protein in a standard Repressilator implementation.  
+The second one in line 167: Shows the States "ladder" as well as the the states 0,1 and 2 described in the paper.  
+The third one in line 173: Shows the States "ladder" as well as the the states 3,4 and 5 described in the paper.  
   
 ## references  
 Here we have the main references that we used to have a basis from where to start our paper.  
