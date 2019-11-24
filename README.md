@@ -33,8 +33,8 @@ The "ourSwitch_1bitCounter.m" was our first try to make a switch.
 ### fragile counter  
 Here we have better implementations than our initial ideas, but they yet are not stable enough.  
 ### robust counter  
-In the file "Used/ourSwicth_1bitCounter.m" we make our toggle switch with only one input that was used in the paper.  
-In the file "Used/3bitCounter.m" we have 2 plots, the first one represents the internal elements of the third switch. And the second plot illutrates the output of a 3 bit counter.    
+In the file "Used/ourSwicth_1bitCounter.m" we have our toggle switch with only one input that was used in the paper.  
+In the file "Used/3bitCounter.m" we have our implementation of a 3 bit counter used in the paper.    
 For all of these models:  
 (i)   We have exchanged the name of the repressor ri to pi.  
 (ii)  The name of the elements of the second switch have "se" in their beginning.  
