@@ -1,9 +1,9 @@
 clear;
 
 dt=0.01; 
-t=0:dt:200; 
+t=0:dt:250; 
 
-%i = 1 ate 20000
+%i = 1 ate 26000
 
 p1 = 0;
 p2 = 2.5;
@@ -195,7 +195,6 @@ endfor
 
 figure;
 hold on;
-%plot(t, p1s, 'b;P1;', t ,p2s, 'r;P2;', t , pulso , 'k;pulso;');
-plot(t, p1s, ':k;R1;', t, sep1s, '--k;R3;', t, thp1s, '-k;R5;', t , pulso , '-.k;Pulse;');
+plot(t, p1s, ':k;R1;', t, sep1s, '--k;R3;', t, thp1s, 'k;R5;', t , pulso , '-.k;Pulse;');
 xlabel('Time');
 ylabel('Concentration');
